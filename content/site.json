@@ -2,8 +2,7 @@
  "brand": {
   "name": "Newbutton Models",
   "logo": "images/brand/logo-full.svg",
-  "logo_mark": "images/brand/logo-mark.svg",
-  "logo_height": 46
+  "logo_height": 58
  },
  "look": {
   "preset": "black",
@@ -13,7 +12,7 @@
   "dim": "",
   "accent": "",
   "line": "",
-  "font_pair": "bodoni"
+  "font_pair": "montserrat"
  },
  "pages": {
   "journal": false,
@@ -43,8 +42,8 @@
   "link": ""
  },
  "home": {
-  "eyebrow": "Abuja • Worldwide",
-  "headline": "Newbutton *Models*",
+  "eyebrow": "",
+  "headline": "Newbutton Models",
   "tagline": "Discovering and nurturing the next generation of iconic talent.",
   "women_label": "Women",
   "men_label": "Men",
@@ -60,14 +59,21 @@
   "board_title": "The Board",
   "featured_count": 8,
   "all_label": "View all models",
-  "scout_title": "Become a *new face*",
-  "journal_title": "The *Journal*",
-  "brands_title": "Work with *us*"
+  "scout_title": "Become a new face",
+  "journal_title": "The Journal",
+  "brands_title": "Work with us",
+  "ticker_speed": 40
  },
  "features": {
   "hover_second_photo": true,
   "shortlist": true,
-  "ticker": true
+  "ticker": true,
+  "jobs": true,
+  "polaroids": true,
+  "comp_card": true,
+  "bio": true,
+  "stats": true,
+  "book_button": true
  },
  "scouting": {
   "title": "Get Scouted",
@@ -128,12 +134,20 @@
   "show_tiktok": true
  },
  "footer": {
-  "copyright": "© 2026 Newbutton Management"
+  "copyright": "© 2026 Newbutton Management",
+  "show_location": true,
+  "show_copyright": true
  },
  "seo": {
   "site_url": "https://newbuttonmodels.com",
   "title": "Newbutton Models",
   "description": "Newbutton Models is a modeling agency with partners and talent worldwide.",
   "share_image": "images/brand/share.png"
+ },
+ "labels": {
+  "jobs": "Jobs",
+  "polaroids": "Polaroids",
+  "comp": "Comp card",
+  "book": "Book this model"
  }
 }
