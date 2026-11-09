@@ -1,0 +1,139 @@
+{
+ "brand": {
+  "name": "Newbutton Models",
+  "logo": "images/brand/logo-full.svg",
+  "logo_mark": "images/brand/logo-mark.svg",
+  "logo_height": 46
+ },
+ "look": {
+  "preset": "black",
+  "bg": "",
+  "surface": "",
+  "text": "",
+  "dim": "",
+  "accent": "",
+  "line": "",
+  "font_pair": "bodoni"
+ },
+ "pages": {
+  "journal": false,
+  "scouting": true,
+  "brands": true,
+  "casting": false,
+  "press": false,
+  "about": true,
+  "team": false,
+  "faq": false,
+  "contact": true
+ },
+ "nav": {
+  "home": "Home",
+  "models": "Models",
+  "journal": "Journal",
+  "scouting": "Get Scouted",
+  "brands": "For Brands",
+  "casting": "Casting",
+  "press": "Press",
+  "about": "About",
+  "faq": "FAQ",
+  "contact": "Contact"
+ },
+ "announcement": {
+  "text": "",
+  "link": ""
+ },
+ "home": {
+  "eyebrow": "Abuja • Worldwide",
+  "headline": "Newbutton *Models*",
+  "tagline": "Discovering and nurturing the next generation of iconic talent.",
+  "women_label": "Women",
+  "men_label": "Men",
+  "hero_images": [],
+  "ticker": [
+   "Runway",
+   "Editorial",
+   "Streetwear",
+   "Commercial",
+   "Newbutton Models"
+  ],
+  "board_label": "Current roster",
+  "board_title": "The Board",
+  "featured_count": 8,
+  "all_label": "View all models",
+  "scout_title": "Become a *new face*",
+  "journal_title": "The *Journal*",
+  "brands_title": "Work with *us*"
+ },
+ "features": {
+  "hover_second_photo": true,
+  "shortlist": true,
+  "ticker": true
+ },
+ "scouting": {
+  "title": "Get Scouted",
+  "label": "Apply now",
+  "intro": "Welcome dear new faces, fill out the form below. Our team reviews every submission personally and will reach out if you get scouted.",
+  "note": "Please attach two unedited photos (one close-up, one full length) before sending.",
+  "subnote": "This opens your email app with your details pre-filled.",
+  "button": "Submit Application"
+ },
+ "about": {
+  "title": "About Us",
+  "label": "Who we are",
+  "intro": "Newbutton Models is a modeling agency with partners and talents in worldwide, dedicated to discovering and nurturing the next generation of iconic talent. We celebrate diversity and individuality, and back our models with a team that’s genuinely invested in their careers.",
+  "photo": "",
+  "team_title": "Team",
+  "blocks": [
+   {
+    "title": "Our Vision",
+    "text": "Newbutton Models envisions a world where beauty knows no boundaries. Our goal is to redefine the standards of beauty and fashion by representing a diverse array of talents that reflect the rich tapestry of European, African, Asian and American culture. We believe in the power of authenticity and strive to empower models to embrace their uniqueness and express it confidently on the global stage."
+   },
+   {
+    "title": "Our Mission",
+    "text": "Driven by passion and creativity, our mission is to provide a platform for aspiring models to thrive. We are committed to cultivating talent, fostering professional growth, and building lasting relationships within the fashion industry. With a focus on integrity, excellence and innovation, we aim to set the benchmark for model management globally."
+   }
+  ]
+ },
+ "team": [],
+ "brands": {
+  "title": "For Brands",
+  "label": "Book talent",
+  "intro": "Looking to book talent? Shortlist the models you like and tell us about your project.",
+  "button": "Send enquiry",
+  "note": "This opens your email app with your enquiry pre-filled."
+ },
+ "casting": {
+  "title": "Casting",
+  "label": "Open calls",
+  "intro": "",
+  "items": []
+ },
+ "press": {
+  "title": "Press",
+  "label": "In the press",
+  "intro": "",
+  "items": []
+ },
+ "faq": [],
+ "contact": {
+  "title": "Contact",
+  "label": "Get in touch",
+  "text": "For bookings, scouting and press, write to us.",
+  "email": "info@newbuttonmodels.com",
+  "location": "Abuja • Worldwide",
+  "instagram": "newbuttonmodels",
+  "tiktok": "newbuttonmodels",
+  "show_email": true,
+  "show_instagram": true,
+  "show_tiktok": true
+ },
+ "footer": {
+  "copyright": "© 2026 Newbutton Management"
+ },
+ "seo": {
+  "site_url": "https://newbuttonmodels.com",
+  "title": "Newbutton Models",
+  "description": "Newbutton Models is a modeling agency with partners and talent worldwide.",
+  "share_image": "images/brand/share.png"
+ }
+}
