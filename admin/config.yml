@@ -21,8 +21,7 @@ collections:
             required: false
             fields:
               - {label: "Agency name", name: name, widget: string, required: false}
-              - {label: "Full logo (white on transparent, SVG or PNG)", name: logo, widget: image, required: false, hint: "Used in the footer"}
-              - {label: "Header logo (white on transparent, SVG or PNG)", name: logo_mark, widget: image, required: false, hint: "Used in the top bar"}
+              - {label: "Logo (white on transparent, SVG or PNG)", name: logo, widget: image, required: false, hint: "Used in the top bar and the menu"}
               - {label: "Header logo height in pixels", name: logo_height, widget: number, required: false, value_type: int, min: 20, max: 120}
           - label: "2. Colours and fonts"
             name: look
@@ -37,7 +36,7 @@ collections:
               - {label: "Soft text colour", name: dim, widget: color, required: false}
               - {label: "Accent colour", name: accent, widget: color, required: false}
               - {label: "Thin line colour", name: line, widget: color, required: false}
-              - {label: "Font pair", name: font_pair, widget: select, required: false, options: ["bodoni", "syne", "shoulders", "instrument"], default: bodoni}
+              - {label: "Font pair", name: font_pair, widget: select, required: false, options: [{label: "Montserrat Bold with Archivo", value: montserrat}, {label: "Bodoni Moda with Archivo", value: bodoni}, {label: "Syne with Manrope", value: syne}, {label: "Big Shoulders with Archivo Narrow", value: shoulders}, {label: "Instrument Serif with Geist", value: instrument}], default: montserrat}
           - label: "3. Pages on or off"
             name: pages
             widget: object
@@ -98,6 +97,7 @@ collections:
                 widget: list
                 required: false
                 field: {label: Word, name: w, widget: string}
+              - {label: "Scrolling speed (seconds for one full pass, bigger is slower)", name: ticker_speed, widget: number, value_type: int, min: 10, max: 120, required: false, hint: "Empty means 40"}
               - {label: "Models section small label", name: board_label, widget: string, required: false}
               - {label: "Models section title", name: board_title, widget: string, required: false}
               - {label: "Models shown on the home page", name: featured_count, widget: number, required: false, value_type: int, min: 1, max: 24}
@@ -114,6 +114,12 @@ collections:
               - {label: "Show second photo when hovering a model", name: hover_second_photo, widget: boolean, default: true}
               - {label: "Client shortlist", name: shortlist, widget: boolean, default: true}
               - {label: "Scrolling words strip", name: ticker, widget: boolean, default: true}
+              - {label: "Jobs on model pages", name: jobs, widget: boolean, default: true}
+              - {label: "Polaroids on model pages", name: polaroids, widget: boolean, default: true}
+              - {label: "Comp card on model pages", name: comp_card, widget: boolean, default: true}
+              - {label: "About text on model pages", name: bio, widget: boolean, default: true}
+              - {label: "Stats rows (category, height, city)", name: stats, widget: boolean, default: true}
+              - {label: "Book this model button", name: book_button, widget: boolean, default: true}
           - label: "8. Get Scouted"
             name: scouting
             widget: object
@@ -234,6 +240,16 @@ collections:
               - {label: "Show email", name: show_email, widget: boolean, default: true}
               - {label: "Show Instagram", name: show_instagram, widget: boolean, default: true}
               - {label: "Show TikTok", name: show_tiktok, widget: boolean, default: true}
+          - label: "Model page names"
+            name: labels
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Jobs tab name", name: jobs, widget: string, required: false}
+              - {label: "Polaroids tab name", name: polaroids, widget: string, required: false}
+              - {label: "Comp card tab name", name: comp, widget: string, required: false}
+              - {label: "Book button name", name: book, widget: string, required: false}
           - label: "16. Footer"
             name: footer
             widget: object
@@ -241,6 +257,8 @@ collections:
             required: false
             fields:
               - {label: "Copyright line", name: copyright, widget: string, required: false}
+              - {label: "Show location line", name: show_location, widget: boolean, default: true}
+              - {label: "Show copyright line", name: show_copyright, widget: boolean, default: true}
           - label: "17. Search and link sharing"
             name: seo
             widget: object
@@ -282,7 +300,33 @@ collections:
       - {label: "Hide TikTok on this model", name: hide_tiktok, widget: boolean, required: false, default: false}
       - {label: "Featured on the home page", name: featured, widget: boolean, required: false, default: false}
       - {label: "Order (1 shows first)", name: order, widget: number, value_type: int, required: false}
+      - label: "Jobs (each job opens its own photo carousel)"
+        name: jobs
+        widget: list
+        required: false
+        summary: "{{fields.title}}"
+        fields:
+          - {label: "Job title", name: title, widget: string}
+          - {label: "Client or brand", name: client, widget: string, required: false}
+          - {label: "Date", name: date, widget: string, required: false, hint: "For example March 2026"}
+          - label: "Photos (the first one is the cover)"
+            name: photos
+            widget: list
+            field: {label: Photo, name: photo, widget: image}
+          - {label: "Show", name: show, widget: boolean, default: true}
+      - label: "Polaroids"
+        name: polaroids
+        widget: list
+        required: false
+        field: {label: Photo, name: photo, widget: image}
+      - {label: "Comp card images (front and back)", name: comp_card_images, widget: list, required: false, field: {label: Image, name: image, widget: image}}
       - {label: "Comp card (PDF)", name: comp_card, widget: file, required: false}
+      - {label: "Hide Jobs on this model", name: hide_jobs, widget: boolean, required: false, default: false}
+      - {label: "Hide Polaroids on this model", name: hide_polaroids, widget: boolean, required: false, default: false}
+      - {label: "Hide Comp card on this model", name: hide_comp_card, widget: boolean, required: false, default: false}
+      - {label: "Hide About text on this model", name: hide_bio, widget: boolean, required: false, default: false}
+      - {label: "Hide Book button on this model", name: hide_book, widget: boolean, required: false, default: false}
+      - {label: "Hide Shortlist on this model", name: hide_shortlist, widget: boolean, required: false, default: false}
       - {label: "Active", name: active, widget: boolean, default: true}
   - name: journal
     label: "Journal"
