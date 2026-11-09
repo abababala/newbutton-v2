@@ -1,38 +1,308 @@
 backend:
   name: github
-  repo: abababala/newbutton-models
+  repo: abababala/newbutton-v2
   branch: main
-  base_url: https://sveltia-cms-auth.allanaminu247.workers.dev
-  auth_endpoint: auth
 
-media_folder: "images/models"
-public_folder: "/images/models"
+media_folder: images/uploads
+public_folder: /images/uploads
 
 collections:
-  - name: "models"
+  - name: settings
+    label: "Site settings"
+    files:
+      - name: site
+        label: "Everything on the site"
+        file: content/site.json
+        fields:
+          - label: "1. Logo and name"
+            name: brand
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Agency name", name: name, widget: string, required: false}
+              - {label: "Full logo (white on transparent, SVG or PNG)", name: logo, widget: image, required: false, hint: "Used in the footer"}
+              - {label: "Header logo (white on transparent, SVG or PNG)", name: logo_mark, widget: image, required: false, hint: "Used in the top bar"}
+              - {label: "Header logo height in pixels", name: logo_height, widget: number, required: false, value_type: int, min: 20, max: 120}
+          - label: "2. Colours and fonts"
+            name: look
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Colour style", name: preset, widget: select, required: false, options: ["black", "charcoal", "midnight"], default: black}
+              - {label: "Background colour", name: bg, widget: color, required: false, hint: "Leave empty to use the colour style"}
+              - {label: "Panel colour", name: surface, widget: color, required: false}
+              - {label: "Text colour", name: text, widget: color, required: false}
+              - {label: "Soft text colour", name: dim, widget: color, required: false}
+              - {label: "Accent colour", name: accent, widget: color, required: false}
+              - {label: "Thin line colour", name: line, widget: color, required: false}
+              - {label: "Font pair", name: font_pair, widget: select, required: false, options: ["bodoni", "syne", "shoulders", "instrument"], default: bodoni}
+          - label: "3. Pages on or off"
+            name: pages
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Journal", name: journal, widget: boolean, default: true}
+              - {label: "Get Scouted", name: scouting, widget: boolean, default: true}
+              - {label: "For Brands", name: brands, widget: boolean, default: true}
+              - {label: "Casting", name: casting, widget: boolean, default: true}
+              - {label: "Press", name: press, widget: boolean, default: true}
+              - {label: "About", name: about, widget: boolean, default: true}
+              - {label: "Team (inside About)", name: team, widget: boolean, default: true}
+              - {label: "FAQ", name: faq, widget: boolean, default: true}
+              - {label: "Contact", name: contact, widget: boolean, default: true}
+          - label: "4. Menu names"
+            name: nav
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Home", name: home, widget: string, required: false}
+              - {label: "Models", name: models, widget: string, required: false}
+              - {label: "Journal", name: journal, widget: string, required: false}
+              - {label: "Get Scouted", name: scouting, widget: string, required: false}
+              - {label: "For Brands", name: brands, widget: string, required: false}
+              - {label: "Casting", name: casting, widget: string, required: false}
+              - {label: "Press", name: press, widget: string, required: false}
+              - {label: "About", name: about, widget: string, required: false}
+              - {label: "FAQ", name: faq, widget: string, required: false}
+              - {label: "Contact", name: contact, widget: string, required: false}
+          - label: "5. Announcement bar"
+            name: announcement
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Text", name: text, widget: string, required: false, hint: "Leave empty to hide the bar"}
+              - {label: "Link (optional)", name: link, widget: string, required: false}
+          - label: "6. Home page"
+            name: home
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Small line above the headline", name: eyebrow, widget: string, required: false}
+              - {label: "Headline", name: headline, widget: string, required: false, hint: "Put *stars* around a word to make it italic"}
+              - {label: "Tagline", name: tagline, widget: text, required: false}
+              - {label: "Women link name", name: women_label, widget: string, required: false}
+              - {label: "Men link name", name: men_label, widget: string, required: false}
+              - label: "Hero photos (slow slideshow)"
+                name: hero_images
+                widget: list
+                required: false
+                field: {label: Photo, name: p, widget: image}
+              - label: "Scrolling words"
+                name: ticker
+                widget: list
+                required: false
+                field: {label: Word, name: w, widget: string}
+              - {label: "Models section small label", name: board_label, widget: string, required: false}
+              - {label: "Models section title", name: board_title, widget: string, required: false}
+              - {label: "Models shown on the home page", name: featured_count, widget: number, required: false, value_type: int, min: 1, max: 24}
+              - {label: "View all models button", name: all_label, widget: string, required: false}
+              - {label: "Get Scouted block title", name: scout_title, widget: string, required: false}
+              - {label: "Journal block title", name: journal_title, widget: string, required: false}
+              - {label: "For Brands block title", name: brands_title, widget: string, required: false}
+          - label: "7. Extra touches"
+            name: features
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Show second photo when hovering a model", name: hover_second_photo, widget: boolean, default: true}
+              - {label: "Client shortlist", name: shortlist, widget: boolean, default: true}
+              - {label: "Scrolling words strip", name: ticker, widget: boolean, default: true}
+          - label: "8. Get Scouted"
+            name: scouting
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: intro, widget: text, required: false}
+              - {label: "Photo reminder", name: note, widget: string, required: false}
+              - {label: "Small note under the button", name: subnote, widget: string, required: false}
+              - {label: "Button name", name: button, widget: string, required: false}
+          - label: "9. About"
+            name: about
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: intro, widget: text, required: false}
+              - {label: "Wide photo", name: photo, widget: image, required: false, hint: "Optional. Shown in a fixed wide frame"}
+              - {label: "Team heading", name: team_title, widget: string, required: false}
+              - label: "Text blocks"
+                name: blocks
+                widget: list
+                required: false
+                summary: "{{fields.title}}"
+                fields:
+                  - {label: Title, name: title, widget: string}
+                  - {label: Text, name: text, widget: text}
+          - label: "10. Team"
+            name: team
+            widget: list
+            collapsed: true
+            required: false
+            summary: "{{fields.name}}"
+            fields:
+              - {label: "Name", name: name, widget: string}
+              - {label: "Role", name: title, widget: string, required: false}
+              - {label: "Photo", name: photo, widget: image, required: false}
+              - {label: "Crop focus", name: focus, widget: select, required: false, options: ["top", "upper", "center", "bottom"], default: upper}
+              - {label: "Show", name: show, widget: boolean, default: true}
+          - label: "11. For Brands"
+            name: brands
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: intro, widget: text, required: false}
+              - {label: "Button name", name: button, widget: string, required: false}
+              - {label: "Small note under the button", name: note, widget: string, required: false}
+          - label: "12. Casting"
+            name: casting
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: intro, widget: text, required: false}
+              - label: "Casting calls"
+                name: items
+                widget: list
+                required: false
+                summary: "{{fields.title}}"
+                fields:
+                  - {label: Title, name: title, widget: string}
+                  - {label: Date, name: date, widget: string, required: false}
+                  - {label: Location, name: location, widget: string, required: false}
+                  - {label: Details, name: details, widget: text, required: false}
+                  - {label: Show, name: show, widget: boolean, default: true}
+          - label: "13. Press"
+            name: press
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: intro, widget: text, required: false}
+              - label: "Press items"
+                name: items
+                widget: list
+                required: false
+                summary: "{{fields.headline}}"
+                fields:
+                  - {label: Outlet, name: outlet, widget: string, required: false}
+                  - {label: Headline, name: headline, widget: string}
+                  - {label: Link, name: link, widget: string, required: false}
+                  - {label: Date, name: date, widget: string, required: false}
+                  - {label: Show, name: show, widget: boolean, default: true}
+          - label: "14. FAQ"
+            name: faq
+            widget: list
+            collapsed: true
+            required: false
+            summary: "{{fields.q}}"
+            fields:
+              - {label: "Question", name: q, widget: string}
+              - {label: "Answer", name: a, widget: text}
+              - {label: "Show", name: show, widget: boolean, default: true}
+          - label: "15. Contact and socials"
+            name: contact
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Title", name: title, widget: string, required: false}
+              - {label: "Small label", name: label, widget: string, required: false}
+              - {label: "Intro text", name: text, widget: text, required: false}
+              - {label: "Agency email", name: email, widget: string, required: false, hint: "Every email button on the site uses this address"}
+              - {label: "Location line", name: location, widget: string, required: false}
+              - {label: "Agency Instagram handle", name: instagram, widget: string, required: false}
+              - {label: "Agency TikTok handle", name: tiktok, widget: string, required: false}
+              - {label: "Show email", name: show_email, widget: boolean, default: true}
+              - {label: "Show Instagram", name: show_instagram, widget: boolean, default: true}
+              - {label: "Show TikTok", name: show_tiktok, widget: boolean, default: true}
+          - label: "16. Footer"
+            name: footer
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Copyright line", name: copyright, widget: string, required: false}
+          - label: "17. Search and link sharing"
+            name: seo
+            widget: object
+            collapsed: true
+            required: false
+            fields:
+              - {label: "Website address", name: site_url, widget: string, required: false, hint: "For example https://newbuttonmodels.com"}
+              - {label: "Website title", name: title, widget: string, required: false}
+              - {label: "Description", name: description, widget: text, required: false}
+              - {label: "Link preview picture", name: share_image, widget: image, required: false, hint: "1200 by 630 works best. Shown when the link is sent in chats"}
+  - name: models
     label: "Models"
-    folder: "models"
+    label_singular: "Model"
+    folder: models
+    create: true
+    delete: true
+    identifier_field: name
+    slug: "{{slug}}"
+    summary: "{{name}} - {{gender}} - {{category}}"
+    media_folder: /images/models
+    public_folder: /images/models
+    fields:
+      - {label: "Name", name: name, widget: string}
+      - {label: "Gender", name: gender, widget: select, options: [women, men]}
+      - {label: "Category", name: category, widget: select, options: [Runway, Editorial, Streetwear, Commercial, Other]}
+      - {label: "Photo (main)", name: image, widget: image, hint: "Shown in a fixed portrait frame. It is cropped to fit, never stretched"}
+      - label: "Gallery (additional photos)"
+        name: images
+        widget: list
+        required: false
+        field: {label: Photo, name: image, widget: image}
+      - {label: "Crop focus", name: focus, widget: select, required: false, default: upper, hint: "Which part of the photo stays visible when cropped", options: [{label: "Upper (good for faces)", value: upper}, {label: Top, value: top}, {label: Centre, value: center}, {label: Bottom, value: bottom}]}
+      - {label: "Height", name: height, widget: string, required: false}
+      - {label: "City", name: city, widget: string, required: false}
+      - {label: "About (optional)", name: bio, widget: text, required: false}
+      - {label: "Instagram handle", name: instagram, widget: string, required: false}
+      - {label: "TikTok handle", name: tiktok, widget: string, required: false}
+      - {label: "Hide Instagram on this model", name: hide_instagram, widget: boolean, required: false, default: false}
+      - {label: "Hide TikTok on this model", name: hide_tiktok, widget: boolean, required: false, default: false}
+      - {label: "Featured on the home page", name: featured, widget: boolean, required: false, default: false}
+      - {label: "Order (1 shows first)", name: order, widget: number, value_type: int, required: false}
+      - {label: "Comp card (PDF)", name: comp_card, widget: file, required: false}
+      - {label: "Active", name: active, widget: boolean, default: true}
+  - name: journal
+    label: "Journal"
+    label_singular: "Post"
+    folder: journal
     create: true
     delete: true
     slug: "{{slug}}"
-    label_singular: "Model"
-    summary: "{{name}} — {{gender}} — {{category}}"
+    summary: "{{title}}"
+    media_folder: /images/journal
+    public_folder: /images/journal
     fields:
-      - { label: "Name", name: "name", widget: "string" }
-      - label: "Gender"
-        name: "gender"
-        widget: "select"
-        options: ["women", "men"]
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options: ["Runway", "Editorial", "Streetwear", "Commercial"]
-      - { label: "Photo (main)", name: "image", widget: "image" }
-      - label: "Gallery (additional photos)"
-        name: "images"
-        widget: "list"
-        field: { label: "Photo", name: "image", widget: "image" }
+      - {label: "Title", name: title, widget: string}
+      - {label: "Date", name: date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD"}
+      - {label: "Cover photo", name: cover, widget: image, required: false}
+      - {label: "Short summary", name: excerpt, widget: text, required: false}
+      - label: "Tags"
+        name: tags
+        widget: list
         required: false
-      - { label: "Height", name: "height", widget: "string", required: false }
-      - { label: "City", name: "city", widget: "string", required: false }
-      - { label: "Active", name: "active", widget: "boolean", default: true }
+        field: {label: Tag, name: tag, widget: string}
+      - {label: "Hide this post (draft)", name: draft, widget: boolean, required: false, default: false}
+      - {label: "Story", name: body, widget: markdown}
