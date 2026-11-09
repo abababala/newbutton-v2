@@ -21,8 +21,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install image tool (optional, the build still works without it)
-        run: npm install --no-save sharp || true
+      - name: Install helper tools
+        run: |
+          npm install --no-save js-yaml
+          npm install --no-save sharp || true
       - name: Build the site
         run: node build.js
       - uses: actions/upload-pages-artifact@v3
