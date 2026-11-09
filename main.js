@@ -1,126 +1,35 @@
-// Sidebar menu
-function setupMenu() {
-  const openBtn = document.getElementById('menu-open');
-  const closeBtn = document.getElementById('menu-close');
-  const overlay = document.getElementById('menu-overlay');
-  openBtn.addEventListener('click', () => overlay.classList.add('open'));
-  closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
-  overlay.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => overlay.classList.remove('open'));
-  });
-}
-
-// Model gender tabs
-let currentGender = 'women';
-let allModels = [];
-let modelsLoaded = false;
-
-function renderModels() {
-  const grid = document.getElementById('model-grid');
-  const filtered = allModels.filter(m => (m.gender || 'women').toLowerCase() === currentGender);
-
-  if (!modelsLoaded) {
-    grid.innerHTML = `<div class="empty-state">Loading…</div>`;
-    return;
-  }
-
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty-state">New faces coming soon.</div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map(m => {
-    const photos = Array.isArray(m.images) && m.images.length ? m.images : [m.image].filter(Boolean);
-    const mainPhoto = photos[0] || '';
-    const href = m.slug ? `/models/${m.slug}` : '#';
-    return `
-    <a class="model-card" href="${href}">
-      <img src="${mainPhoto}" alt="${m.name}" loading="lazy">
-      <div class="model-info">
-        <div class="model-name">${m.name}</div>
-        <div class="model-meta">${m.category || ''}${m.city ? ' · ' + m.city : ''}</div>
-      </div>
-    </a>
-  `;
-  }).join('');
-}
-
-function setupTabs() {
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      currentGender = btn.dataset.gender;
-      renderModels();
-    });
-  });
-}
-
-// WOMEN | MEN hero links also jump to the matching tab
-function setupHeroChoice() {
-  document.querySelectorAll('.gender-choice a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const gender = link.dataset.gender;
-      const tab = document.querySelector(`.tab-btn[data-gender="${gender}"]`);
-      if (tab) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        tab.classList.add('active');
-      }
-      currentGender = gender;
-      // Always re-render, whether or not models have finished loading yet —
-      // once loadModels() resolves it calls renderModels() again with real data.
-      renderModels();
-    });
-  });
-}
-
-async function loadModels() {
-  try {
-    // A cache-busting query string (instead of cache:'no-store') keeps this
-    // fetch fast and reliable on mobile browsers/proxies that handle
-    // no-store requests slowly or inconsistently.
-    const res = await fetch('/models/models.json?v=' + Date.now());
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data)) allModels = data;
-    }
-  } catch (e) {
-    // stay empty silently
-  }
-  modelsLoaded = true;
-  renderModels();
-}
-
-// Get Scouted form — opens applicant's email app, pre-filled, addressed to the agency
-function setupCastingForm() {
-  const form = document.getElementById('casting-form');
-  if (!form) return;
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const name = data.get('name') || '';
-    const email = data.get('email') || '';
-    const gender = data.get('gender') || '';
-    const height = data.get('height') || '';
-    const city = data.get('city') || '';
-    const message = data.get('message') || '';
-
-    const subject = encodeURIComponent('Get Scouted — ' + name);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nGender: ${gender}\nHeight: ${height}\nCity: ${city}\n\nMessage:\n${message}\n\nReminder before sending: please attach two unedited photos (one close-up, one full length).`
-    );
-    window.location.href = `mailto:info@newbuttonmodels.com?subject=${subject}&body=${body}`;
-  });
-}
-
-// Start fetching model data as early as possible so it's ready (or close to
-// ready) by the time someone taps WOMEN/MEN, rather than waiting for the
-// DOMContentLoaded queue.
-loadModels();
-
-document.addEventListener('DOMContentLoaded', () => {
-  setupMenu();
-  setupTabs();
-  setupHeroChoice();
-  setupCastingForm();
-});
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+// menu + header
+const ov=$('#ov'),hd=$('#hd');
+$('#mo').onclick=()=>{ov.classList.add('o');ov.setAttribute('aria-hidden','false')};
+$('#mc').onclick=()=>{ov.classList.remove('o');ov.setAttribute('aria-hidden','true')};
+$$('#ov nav a').forEach(a=>a.onclick=()=>ov.classList.remove('o'));
+addEventListener('keydown',e=>{if(e.key==='Escape')ov.classList.remove('o')});
+const sc=()=>hd.classList.toggle('sc',scrollY>40);sc();addEventListener('scroll',sc,{passive:true});
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&x.target.classList.add('v')),{threshold:.05});$$('.rv').forEach(x=>io.observe(x));
+// hero slideshow
+const hs=$$('.hs img');if(hs.length>1){let i=0;setInterval(()=>{hs[i].classList.remove('on');i=(i+1)%hs.length;hs[i].classList.add('on')},5500)}
+// filters
+const gr=$('#grid');if(gr){const f={g:'',c:''},q=new URLSearchParams(location.search).get('g');if(q)f.g=q;
+const run=()=>{$$('.mc',gr).forEach(c=>c.hidden=(f.g&&c.dataset.g!==f.g)||(f.c&&c.dataset.c!==f.c));$$('.flt button').forEach(b=>b.classList.toggle('on',b.dataset.v===f[b.dataset.f]))};
+$$('.flt button').forEach(b=>b.onclick=()=>{f[b.dataset.f]=b.dataset.v===f[b.dataset.f]?'':b.dataset.v;run()});run()}
+// shortlist (saved in the visitor's own browser)
+const SK='nb_shortlist',gl=()=>{try{return JSON.parse(localStorage.getItem(SK))||[]}catch(e){return[]}},sl=a=>{try{localStorage.setItem(SK,JSON.stringify(a))}catch(e){}};
+const root=(document.currentScript&&document.currentScript.src||'').replace(/main\.js.*$/,'');
+const paint=()=>{const a=gl(),k=$('[data-slc]');if(k){k.hidden=!a.length;$('b',k).textContent=a.length}
+$$('[data-s]').forEach(b=>{const on=a.some(x=>x.s===b.dataset.s);b.classList.toggle('on',on);if(b.dataset.t)b.textContent=on?'In shortlist':'Add to shortlist';else b.textContent=on?'✓':'+'});
+const box=$('#shortlist');if(box)box.innerHTML=a.length?'<p class="eb">Your shortlist</p><p>'+a.map(x=>'<strong>'+x.n.replace(/</g,'&lt;')+'</strong>').join(', ')+'</p>':'<p>Add models with the + button on the board and they will be included in your enquiry.</p>'};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;e.preventDefault();let a=gl();const i=a.findIndex(x=>x.s===b.dataset.s);i>-1?a.splice(i,1):a.push({s:b.dataset.s,n:b.dataset.n,u:b.dataset.u});sl(a);paint()});paint();
+// lightbox
+const L=$$('[data-lb]');if(L.length){const lb=document.createElement('div');lb.className='lb';lb.innerHTML='<button class="c"></button><button class="x">Close</button><button class="p">Prev</button><button class="n">Next</button><img alt="">';document.body.appendChild(lb);let i=0,sx=0;
+const show=n=>{i=(n+L.length)%L.length;$('img',lb).src=L[i].href;$('.c',lb).textContent=(i+1)+' / '+L.length},cl=()=>lb.classList.remove('o');
+L.forEach((a,k)=>a.onclick=e=>{e.preventDefault();show(k);lb.classList.add('o')});
+$('.x',lb).onclick=cl;$('.p',lb).onclick=()=>show(i-1);$('.n',lb).onclick=()=>show(i+1);
+lb.addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40)show(i+(d<0?1:-1))});
+addEventListener('keydown',e=>{if(!lb.classList.contains('o'))return;if(e.key==='Escape')cl();if(e.key==='ArrowRight')show(i+1);if(e.key==='ArrowLeft')show(i-1)})}
+// email forms: open the visitor's email app, pre-filled
+$$('form[data-mail]').forEach(f=>f.onsubmit=e=>{e.preventDefault();const L=$$('[name]',f).map(x=>(x.dataset.l||x.name)+': '+x.value.trim());
+if(f.dataset.sl){const a=gl();if(a.length)L.push('Shortlist: '+a.map(x=>x.n+' ('+new URL('../'+x.u,location.href).href+')').join(', '))}
+if(f.dataset.note)L.push('','Reminder before sending: '+f.dataset.note);
+location.href='mailto:'+f.dataset.mail+'?subject='+encodeURIComponent(f.dataset.subject+' - '+($('[name=name]',f)||{value:''}).value)+'&body='+encodeURIComponent(L.join('\n'))});
