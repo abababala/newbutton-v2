@@ -24,5 +24,5 @@ hide_comp_card: false
 hide_bio: false
 hide_book: false
 hide_shortlist: false
-active: true
+active: false
 ---
